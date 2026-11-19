@@ -1,0 +1,70 @@
+@extends('layouts.app')
+
+@section('title', 'Tambah Kegiatan - To-Do List Kegiatan')
+
+@section('content')
+<div class="dashboard-container">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div class="card">
+            <div class="card-header-flex">
+                <h2 class="card-title">Tambah Kegiatan Baru</h2>
+                <a href="{{ route('dashboard') }}" class="btn-secondary" style="padding: 6px 12px; font-size: 13px;">&larr; Kembali</a>
+            </div>
+
+            <form action="{{ route('kegiatan.store') }}" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label for="nama_kegiatan">Nama Kegiatan <span style="color: #c93b55;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="nama_kegiatan" 
+                        name="nama_kegiatan" 
+                        class="form-control" 
+                        value="{{ old('nama_kegiatan') }}" 
+                        placeholder="Contoh: Mengerjakan Tugas Besar PAW" 
+                        required 
+                        autofocus
+                    >
+                    @error('nama_kegiatan')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi (Opsional)</label>
+                    <textarea 
+                        id="deskripsi" 
+                        name="deskripsi" 
+                        class="form-control" 
+                        placeholder="Tuliskan catatan atau rincian kegiatan jika ada..."
+                    >{{ old('deskripsi') }}</textarea>
+                    @error('deskripsi')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggal_pelaksanaan">Tanggal Pelaksanaan <span style="color: #c93b55;">*</span></label>
+                    <input 
+                        type="date" 
+                        id="tanggal_pelaksanaan" 
+                        name="tanggal_pelaksanaan" 
+                        class="form-control" 
+                        value="{{ old('tanggal_pelaksanaan', date('Y-m-d')) }}" 
+                        required
+                    >
+                    @error('tanggal_pelaksanaan')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Simpan Kegiatan</button>
+                    <a href="{{ route('dashboard') }}" class="btn-secondary">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
